@@ -3,6 +3,7 @@ import BooksGrid from './BooksGrid'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Route } from 'react-router-dom'
+import ExamplePage from './ExamplePage'
 
 class BooksApp extends React.Component {
   state = {
@@ -26,8 +27,12 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path='/' render={ () => (
+        <Route exact path='/' render={ () => (
             <BooksGrid books={this.state.books}/>
+          )
+        } />
+        <Route exact path='/example' render={ () => (
+            <ExamplePage />
           )
         } />
       </div>
