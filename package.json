@@ -1,4 +1,11 @@
 {
+  "name": "my-reads",
+  "author": {
+    "name": "Crispim",
+    "email": "igor.crispimdiniz@gmail.com"
+  },
+  "version": "1.0.0",
+  "private": true,
   "dependencies": {
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
@@ -12,5 +19,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IgorCRD/reactnd-project-myreads-starter.git"
   }
 }
