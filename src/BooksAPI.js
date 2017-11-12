@@ -3,6 +3,7 @@ const api = "https://reactnd-books-api.udacity.com"
 
 
 // Generate a unique token for storing your bookshelf data on the backend server.
+// TODO: Add random token
 let token = localStorage.token
 if (!token)
   token = localStorage.token = 'igor.crispim'//Math.random().toString(36).substr(-8)

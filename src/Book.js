@@ -6,11 +6,19 @@ class Book extends Component {
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.cover}")` }}></div>
+          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.cover}")` }}>
+          </div>
           <BookShelfChanger />
         </div>
-        <div className="book-title">{ this.props.title }</div>
-        <div className="book-authors">{ this.props.author }</div>
+        <div className="book-title">{ this.props.title }
+        </div>
+        {
+          this.props.authors.map( (author) => (
+              <div className="book-authors">{ author }
+              </div>
+            )
+          )
+        }
       </div>
     );
   }
