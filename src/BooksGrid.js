@@ -8,11 +8,18 @@ class BooksGrid extends Component {
   }
 
   render() {
-    let distinctShelfs = [...new Set(this.props.books.map( book => book.shelf ))];
-    distinctShelfs = distinctShelfs.map(shelfName => (
+    const shelfNamesByType = {
+      currentlyReading: 'Currently Reading',
+      wantToRead: 'Want to Read',
+      read: 'Read',
+    }
+
+    const distinctShelfNames = [...new Set(this.props.books.map( book => book.shelf ))];
+    const distinctShelfs = distinctShelfNames.map(shelfType => (
         {
-          name: shelfName,
-          books: this.props.books.filter(book => book.shelf === shelfName)
+          shelfName: shelfNamesByType[shelfType],
+          shelfType: shelfType,
+          books: this.props.books.filter(book => book.shelf === shelfType)
         }
       )
     )
@@ -26,7 +33,7 @@ class BooksGrid extends Component {
           <div>
             {
               distinctShelfs.map( (shelf) =>
-                <BookShelf name={shelf.name} books={ shelf.books }/>
+                <BookShelf name={shelf.shelfName} books={ shelf.books }/>
               )
             }
           </div>
