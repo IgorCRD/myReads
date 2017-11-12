@@ -9,4 +9,4 @@ To put it to work right away:
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
-Hope you enjoy it<a><img src="https://cdn.rawgit.com/IgorCRD/reactnd-project-myreads-starter/18318ca9/src/icons/smile.svg"/></a>
+Hope you enjoy it <img src="https://cdn.rawgit.com/IgorCRD/reactnd-project-myreads-starter/18318ca9/src/icons/smile.svg"/>
