@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import Book from './Book'
+import PropTypes from 'prop-types'
 
 class BookShelf extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    books: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onBookShelfChange: PropTypes.func.isRequired,
+  };
+
   render() {
     return (
       <div className="bookshelf">
@@ -9,10 +16,14 @@ class BookShelf extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
               {
-                this.props.books.map( (book) =>
-                  <li>
-                    <Book cover={ book.imageLinks.thumbnail } title={ book.title } authors={ book.authors }/>
-                  </li>
+                /* li tag was kept outside book component to make it usable
+                in other situations besides lists*/
+                this.props.books.map( (book) => (
+                    <li key={ book.id }>
+                      <Book bookId={ book.id } cover={ book.imageLinks.thumbnail } title={ book.title }
+                        authors={ book.authors } onBookShelfChange={ this.props.onBookShelfChange } shelf={ book.shelf }/>
+                    </li>
+                  )
                 )
               }
           </ol>

@@ -4,25 +4,35 @@ import PropTypes from 'prop-types'
 
 class BooksGrid extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onBookShelfChange: PropTypes.func.isRequired,
+  }
+
+  static shelfNamesByType = {
+    currentlyReading: 'Currently Reading',
+    wantToRead: 'Want to Read',
+    read: 'Read',
   }
 
   render() {
-    const shelfNamesByType = {
-      currentlyReading: 'Currently Reading',
-      wantToRead: 'Want to Read',
-      read: 'Read',
-    }
-
     const distinctShelfNames = [...new Set(this.props.books.map( book => book.shelf ))];
-    const distinctShelfs = distinctShelfNames.map(shelfType => (
-        {
-          shelfName: shelfNamesByType[shelfType],
-          shelfType: shelfType,
-          books: this.props.books.filter(book => book.shelf === shelfType)
+    const distinctShelves = distinctShelfNames
+      .map(shelfType => (
+          {
+            shelfName: BooksGrid.shelfNamesByType[shelfType],
+            shelfType: shelfType,
+            books: this.props.books.filter(book => book.shelf === shelfType)
+          }
+        )
+      )
+      .sort( 
+        (a, b) => {
+          if(a.shelfType > b.shelfType) { return 1 }
+          if(a.shelfType < b.shelfType) { return -1 }
+          return 0
         }
       )
-    )
+
 
     return (
       <div className="list-books">
@@ -32,8 +42,9 @@ class BooksGrid extends Component {
         <div className="list-books-content">
           <div>
             {
-              distinctShelfs.map( (shelf) =>
-                <BookShelf name={shelf.shelfName} books={ shelf.books }/>
+              distinctShelves.map( (shelf) =>
+                <BookShelf key={ shelf.shelfName } name={ shelf.shelfName } books={ shelf.books }
+                  onBookShelfChange={ this.props.onBookShelfChange }/>
               )
             }
           </div>

@@ -16,6 +16,25 @@ class BooksApp extends React.Component {
     books: []
   }
 
+  changeBookShelf = (bookId, fromShelf, toShelf) => {
+    // retrieving the book to update and removing the property shelf from the object
+    const { shelf, ...bookToUpdate } = this.state.books.filter( (book) => book.id === bookId)[0];
+    debugger;
+    if(toShelf !== 'none') {
+      bookToUpdate.shelf = toShelf;
+    }
+
+    this.setState( (state) => (
+      {
+        books: state.books
+          .map( (book) => (book.id === bookId) ? bookToUpdate : book )
+          .filter( (book) => book.hasOwnProperty('shelf') && book.shelf !== 'none')
+      }
+    ))
+
+    BooksAPI.update(bookToUpdate, toShelf);
+  }
+
   componentDidMount = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({
@@ -28,7 +47,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path='/' render={ () => (
-            <BooksGrid books={this.state.books}/>
+            <BooksGrid books={this.state.books} onBookShelfChange={ this.changeBookShelf }/>
           )
         } />
         <Route exact path='/example' render={ () => (
