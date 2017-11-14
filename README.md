@@ -1,7 +1,8 @@
 # MyReads Project
 
-This is was made as a required project for udacity react nanodegree. I started it forking from the template
-project available at [MyReads at udacity github repository](https://github.com/udacity/reactnd-project-myreads-starter.git)
+This project is a required component for udacity react nanodegree.
+
+I started it forking from the template project available at [MyReads at udacity github repository](https://github.com/udacity/reactnd-project-myreads-starter.git)
 
 ## TL;DR
 
