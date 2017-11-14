@@ -1,8 +1,10 @@
 import React from 'react'
-import BooksGrid from './BooksGrid'
-import * as BooksAPI from './BooksAPI'
-import './App.css'
 import { Route } from 'react-router-dom'
+import './App.css'
+import * as BooksAPI from './BooksAPI'
+import BooksGrid from './BooksGrid'
+import SearchBar from './SearchBar'
+import SearchResults from './SearchResults'
 import ExamplePage from './ExamplePage'
 
 class BooksApp extends React.Component {
@@ -48,6 +50,13 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path='/' render={ () => (
             <BooksGrid books={this.state.books} onBookShelfChange={ this.changeBookShelf }/>
+          )
+        } />
+        <Route exact path='/search' render={ () => (
+            <div>
+              <SearchBar />
+              <SearchResults />
+            </div>
           )
         } />
         <Route exact path='/example' render={ () => (

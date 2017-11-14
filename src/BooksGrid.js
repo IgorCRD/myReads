@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import BookShelf from './BookShelf'
 import PropTypes from 'prop-types'
+import BookShelf from './BookShelf'
+import ToSearch from './ToSearch'
 
 class BooksGrid extends Component {
   static propTypes = {
@@ -14,25 +15,30 @@ class BooksGrid extends Component {
     read: 'Read',
   }
 
-  render() {
-    const distinctShelfNames = [...new Set(this.props.books.map( book => book.shelf ))];
+  static _separateBooksByShelfType(books){
+    const distinctShelfNames = [...new Set(books.map( book => book.shelf ))];
     const distinctShelves = distinctShelfNames
       .map(shelfType => (
           {
             shelfName: BooksGrid.shelfNamesByType[shelfType],
             shelfType: shelfType,
-            books: this.props.books.filter(book => book.shelf === shelfType)
+            books: books.filter(book => book.shelf === shelfType)
           }
         )
       )
-      .sort( 
+      .sort(
         (a, b) => {
           if(a.shelfType > b.shelfType) { return 1 }
           if(a.shelfType < b.shelfType) { return -1 }
           return 0
         }
       )
+    
+    return distinctShelves;
+  }
 
+  render() {
+    const shelves = BooksGrid._separateBooksByShelfType(this.props.books)
 
     return (
       <div className="list-books">
@@ -42,13 +48,14 @@ class BooksGrid extends Component {
         <div className="list-books-content">
           <div>
             {
-              distinctShelves.map( (shelf) =>
+              shelves.map( (shelf) =>
                 <BookShelf key={ shelf.shelfName } name={ shelf.shelfName } books={ shelf.books }
                   onBookShelfChange={ this.props.onBookShelfChange }/>
               )
             }
           </div>
         </div>
+        <ToSearch />
       </div>
     );
   }
