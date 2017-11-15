@@ -20,8 +20,8 @@ class BookShelf extends Component {
                 in other situations besides lists*/
                 this.props.books.map( (book) => (
                     <li key={ book.id }>
-                      <Book bookId={ book.id } cover={ book.imageLinks.thumbnail } title={ book.title }
-                        authors={ book.authors } onBookShelfChange={ this.props.onBookShelfChange } shelf={ book.shelf }/>
+                      <Book bookId={ book.id } cover={ (book.imageLinks) ? (book.imageLinks.thumbnail) : ('') } title={ book.title }
+                        authors={ book.authors || [] } onBookShelfChange={ this.props.onBookShelfChange } shelf={ book.shelf }/>
                     </li>
                   )
                 )
