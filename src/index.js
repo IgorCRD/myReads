@@ -8,6 +8,7 @@ import wyboTheme from 'reapop-theme-wybo';
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import 'font-awesome/css/font-awesome.css';
 
 // store
 const createStoreWithMiddleware = compose(applyMiddleware(thunk))(createStore);
