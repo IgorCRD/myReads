@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BookShelfChanger from './BookShelfChanger'
 import PropTypes from 'prop-types'
-import coverNotFound from './media/booknocoverimage.jpg'
+import coverNotFound from '../media/booknocoverimage.jpg'
 
 class Book extends Component {
   static propTypes = {
