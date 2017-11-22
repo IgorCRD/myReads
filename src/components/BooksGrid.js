@@ -45,10 +45,10 @@ class BooksGrid extends Component {
     let options = {};
     const drake = Dragula(this.bookLists, options);
     drake.on('drop', (bookBeingMoved, toThisShelf) => {
-      drake.cancel(true);
+      drake.cancel(true); //undo manual DOM manipulation made by dragula component
       this.props.onBookShelfChange(
         bookBeingMoved.getAttribute('data-bookId'), 
-        toThisShelf.getAttribute('data-shelftype'))
+        toThisShelf.getAttribute('data-shelftype'));
     });
   }
 
