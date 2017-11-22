@@ -14,6 +14,7 @@
     "react-block-ui": "^1.1.1",
     "react-debounce-input": "^3.1.0",
     "react-dom": "^15.5.4",
+    "react-dragula": "^1.1.17",
     "react-loaders": "^3.0.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",

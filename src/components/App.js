@@ -22,12 +22,6 @@ class BooksApp extends React.Component {
     blockResultsArea: false,
   }
 
-  setBlockResultsArea(flag){
-    this.setState({
-      blockResultsArea: flag
-    })
-  }
-
   static _getSendingMessage(shelvesNames, shelfType){
     if(shelfType === 'none'){
       return 'Removing book from shelves...';
@@ -55,7 +49,6 @@ class BooksApp extends React.Component {
       dismissible: false,
       dismissAfter: 0
     });
-
     BooksAPI.update({ id: bookId }, toShelf)
       .then( () => {
         return BooksAPI.getAll();
@@ -68,7 +61,7 @@ class BooksApp extends React.Component {
         updateNotification(notif);
         this.setState({ books: books })
       })
-      .catch( () => {
+      .catch( (err) => {
         notif.status = 'error';
         notif.message = 'Sorry! Something went wrong. Please, try again in a while.';
         notif.dismissible = true;
@@ -76,6 +69,12 @@ class BooksApp extends React.Component {
         updateNotification(notif);
         this.setState({ books: [] })
       });
+  }
+
+  setBlockResultsArea(flag){
+    this.setState({
+      blockResultsArea: flag
+    })
   }
 
   componentDidMount = () => {

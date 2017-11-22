@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import BookShelf from './BookShelf'
 import ToSearch from './ToSearch'
+import Dragula from 'react-dragula'
+import '/Users/Igor/code/myReads/node_modules/react-dragula/dist/dragula.min.css'
 
 class BooksGrid extends Component {
   static propTypes = {
@@ -14,6 +16,8 @@ class BooksGrid extends Component {
     wantToRead: 'Want to Read',
     read: 'Read',
   }
+
+  bookLists = [];
 
   static _separateBooksByShelfType(books){
     const distinctShelfNames = [...new Set(books.map( book => book.shelf ))];
@@ -37,6 +41,21 @@ class BooksGrid extends Component {
     return distinctShelves;
   }
 
+  componentDidMount(){
+    let options = {};
+    const drake = Dragula(this.bookLists, options);
+    drake.on('drop', (bookBeingMoved, toThisShelf) => {
+      drake.cancel(true);
+      this.props.onBookShelfChange(
+        bookBeingMoved.getAttribute('data-bookId'), 
+        toThisShelf.getAttribute('data-shelftype'))
+    });
+  }
+
+  setBookListRef = (bookList) => {
+    this.bookLists.push(bookList);
+  }
+
   render() {
     const shelves = BooksGrid._separateBooksByShelfType(this.props.books)
 
@@ -49,8 +68,9 @@ class BooksGrid extends Component {
           <div>
             {
               shelves.map( (shelf) =>
-                <BookShelf key={ shelf.shelfName } name={ shelf.shelfName } books={ shelf.books }
-                  onBookShelfChange={ this.props.onBookShelfChange }/>
+                <BookShelf key={ shelf.shelfType } shelfType={ shelf.shelfType } name={ shelf.shelfName }
+                  books={ shelf.books } onBookShelfChange={ this.props.onBookShelfChange }
+                  bookListRef={ this.setBookListRef }/>
               )
             }
           </div>
