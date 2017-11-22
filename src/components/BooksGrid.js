@@ -24,8 +24,13 @@ class BooksGrid extends Component {
 
   dropAreas = [];
 
-  static _separateBooksByShelfType(books){
-    const distinctShelfNames = [...new Set(books.map( book => book.shelf ))];
+  static _separateBooksByShelfType(books, showAllShelves){
+    const setOfShelves = new Set(
+        showAllShelves ?
+        Object.keys(BooksGrid.shelfNamesByType) :
+        books.map( book => book.shelf )
+      );
+    const distinctShelfNames = [...setOfShelves];
     const distinctShelves = distinctShelfNames
       .map(shelfType => (
           {
@@ -84,7 +89,8 @@ class BooksGrid extends Component {
   }
 
   render() {
-    const shelves = BooksGrid._separateBooksByShelfType(this.props.books)
+    // if there is a book being dragged then show all shelves
+    const shelves = BooksGrid._separateBooksByShelfType(this.props.books, this.state.dragging);
 
     return (
       <div className="list-books">
