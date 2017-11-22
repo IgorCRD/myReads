@@ -11,7 +11,6 @@ class BookShelf extends Component {
   };
 
   render() {
-    debugger;
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{ this.props.name }</h2>
