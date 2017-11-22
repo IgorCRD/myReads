@@ -25,6 +25,13 @@ class Search extends React.Component {
   }
 
   searchHandler = (query) => {
+    if(!query) { //avoids a request in case of a falsy values
+      this.setState({
+        books: []
+      })
+      return;
+    }
+
     this.setBlockResultsArea(true);
 
     BooksAPI.search(query, 20)
