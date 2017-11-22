@@ -11,10 +11,21 @@ import {
   updateNotification,
   removeNotifications
 } from 'reapop';
+import BlockUI from 'react-block-ui'
+import { Loader } from 'react-loaders';
+import 'react-block-ui/style.css'
+import 'loaders.css/loaders.min.css';
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    blockResultsArea: false,
+  }
+
+  setBlockResultsArea(flag){
+    this.setState({
+      blockResultsArea: flag
+    })
   }
 
   static _getSendingMessage(shelvesNames, shelfType){
@@ -68,6 +79,8 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount = () => {
+    this.setBlockResultsArea(true);
+
     BooksAPI.getAll()
       .then( (books) => {
         this.setState({ books: books })
@@ -75,13 +88,20 @@ class BooksApp extends React.Component {
       .catch( () => {
         this.setState({ books: [] })
       })
+      .then( () => {  //finally
+        this.setBlockResultsArea(false);
+      })
   }
 
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={ () => (
+          <BlockUI tag='div' blocking={ this.state.blockResultsArea }
+            style={{ minWidth: '100%', minHeight: '100%', position: 'absolute' }}
+            loader={ <Loader active type='ball-spin-fade-loader' color="#3ba0f0"/> } keepInView>
             <BooksGrid books={ this.state.books } onBookShelfChange={ this.changeBookShelfHandler }/>
+          </BlockUI>
           )
         } />
         <Route exact path='/search' render={ () => (

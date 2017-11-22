@@ -3,6 +3,10 @@ import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 import * as BooksAPI from './BooksAPI'
 import PropTypes from 'prop-types'
+import BlockUI from 'react-block-ui'
+import { Loader } from 'react-loaders';
+import 'react-block-ui/style.css'
+import 'loaders.css/loaders.min.css';
 
 class Search extends React.Component {
   static propTypes = {
@@ -10,10 +14,19 @@ class Search extends React.Component {
   }
 
   state = {
-    books: []
+    books: [],
+    blockResultsArea: false,
+  }
+
+  setBlockResultsArea(flag){
+    this.setState({
+      blockResultsArea: flag
+    })
   }
 
   searchHandler = (query) => {
+    this.setBlockResultsArea(true);
+
     BooksAPI.search(query, 20)
     .then(booksResult => {
       this.setState({
@@ -28,15 +41,22 @@ class Search extends React.Component {
         books: []
       })
     })
+    .then( () => {  //finally
+      this.setBlockResultsArea(false);
+    })
   }
 
   render(){
     return (
       <div>
         <SearchBar onSearch={ this.searchHandler }/>
-        <SearchResults books={ this.state.books } onBookShelfChange={ this.props.onBookShelfChange }/>
+        <BlockUI tag='div' blocking={ this.state.blockResultsArea }
+          style={{ minWidth: '100%', minHeight: '100%', position: 'absolute' }}
+          loader={ <Loader active type='ball-spin-fade-loader' color="#3ba0f0"/> } keepInView>
+          <SearchResults books={ this.state.books } onBookShelfChange={ this.props.onBookShelfChange }/>
+        </BlockUI>
       </div>
-    ) 
+    )
   }
 }
 
