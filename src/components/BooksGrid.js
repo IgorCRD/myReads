@@ -4,6 +4,7 @@ import BookShelf from './BookShelf'
 import ToSearch from './ToSearch'
 import Dragula from 'react-dragula'
 import '/Users/Igor/code/myReads/node_modules/react-dragula/dist/dragula.min.css'
+import TrashBin from './TrashBin'
 
 class BooksGrid extends Component {
   static propTypes = {
@@ -17,7 +18,11 @@ class BooksGrid extends Component {
     read: 'Read',
   }
 
-  bookLists = [];
+  state = {
+    dragging: false
+  }
+
+  dropAreas = [];
 
   static _separateBooksByShelfType(books){
     const distinctShelfNames = [...new Set(books.map( book => book.shelf ))];
@@ -42,18 +47,40 @@ class BooksGrid extends Component {
   }
 
   componentDidMount(){
-    let options = {};
-    const drake = Dragula(this.bookLists, options);
+    let options = { revertOnSpill: true };
+
+    const drake = Dragula(this.dropAreas, options);
+    /*** REGISTER DRAG AND DROP EVENTS */
     drake.on('drop', (bookBeingMoved, toThisShelf) => {
       drake.cancel(true); //undo manual DOM manipulation made by dragula component
       this.props.onBookShelfChange(
         bookBeingMoved.getAttribute('data-bookId'), 
         toThisShelf.getAttribute('data-shelftype'));
     });
+    drake.on('drag', () => {
+      this.setState({ dragging: true } );
+    })
+    drake.on('dragend', () => {
+      this.setState({ dragging: false } );
+    })
+    drake.on('over', (bookBeingMoved, aboveContainer) => {
+      if(TrashBin.isTrashBinContainer(aboveContainer)){
+        aboveContainer.classList.add('trash-bin-hover');
+      }
+    })
+    drake.on('out', (bookBeingMoved, outOfContainer) => {
+      if(TrashBin.isTrashBinContainer(outOfContainer)){
+        outOfContainer.classList.remove('trash-bin-hover');
+      }
+    })
   }
 
   setBookListRef = (bookList) => {
-    this.bookLists.push(bookList);
+    this.dropAreas.push(bookList);
+  }
+
+  setTrashBinRef = (trashBin) => {
+    this.dropAreas.push(trashBin);
   }
 
   render() {
@@ -73,9 +100,13 @@ class BooksGrid extends Component {
                   bookListRef={ this.setBookListRef }/>
               )
             }
+            {
+              this.state.dragging
+              ? <TrashBin trashBinRef={ this.setTrashBinRef }/>
+              : <ToSearch />
+            }
           </div>
         </div>
-        <ToSearch />
       </div>
     );
   }
