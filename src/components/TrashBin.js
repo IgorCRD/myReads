@@ -1,17 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-class TrashBin extends Component {
+const TrashBin = (props) => {
+  return (
+    <ol ref={ props.trashBinRef } data-shelfType='none' className="trash-bin">
+    </ol>
+  );
+};
 
-  static isTrashBinContainer = (trashBinContainer) => {
-    return trashBinContainer.getAttribute('data-shelftype') === 'none';
-  }
+TrashBin.propTypes = {
+  trashBinRef: PropTypes.func.isRequired,
+};
 
-  render() {
-    return (
-      <ol ref={ this.props.trashBinRef } data-shelfType='none' className="trash-bin">
-      </ol>
-    );
-  }
-}
+TrashBin.isTrashBinContainer = (trashBinContainer) => {
+  return trashBinContainer.getAttribute('data-shelftype') === 'none';
+};
 
 export default TrashBin
