@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import BookShelf from './BookShelf'
 import ToSearch from './ToSearch'
 import Dragula from 'react-dragula'
-import '/Users/Igor/code/myReads/node_modules/react-dragula/dist/dragula.min.css'
+import '../../node_modules/react-dragula/dist/dragula.min.css'
 import TrashBin from './TrashBin'
 
 class BooksGrid extends Component {
