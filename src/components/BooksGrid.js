@@ -51,11 +51,9 @@ class BooksGrid extends Component {
     return distinctShelves;
   }
 
-  componentDidMount(){
+  _registerDragAndDropEvents = () => {
     let options = { revertOnSpill: true };
-
     const drake = Dragula(this.dropAreas, options);
-    /*** REGISTER DRAG AND DROP EVENTS */
     drake.on('drop', (bookBeingMoved, toThisShelf) => {
       drake.cancel(true); //undo manual DOM manipulation made by dragula component
       this.props.onBookShelfChange(
@@ -78,6 +76,43 @@ class BooksGrid extends Component {
         outOfContainer.classList.remove('trash-bin-hover');
       }
     })
+  }
+
+  _registerAutoScrollWhenDraggingEvents = () => {
+    window.addEventListener('mousemove', (mouseEvent) => {
+      this._pageY = mouseEvent.pageY;
+      if(this.state.dragging){
+        const tenPerCentOfWindowHeight = window.innerHeight*0.1;
+        if(mouseEvent.clientY <= tenPerCentOfWindowHeight){
+          this._scrollUp(this._pageY);
+        }
+        if(mouseEvent.clientY >= window.innerHeight - tenPerCentOfWindowHeight){
+          this._scrollDown(this._pageY);
+        }
+      }
+    })
+  }
+
+  _scrollDown = (pageY) => {
+    if (this.state.dragging && pageY === this._pageY) {
+      window.scrollBy(0, 5);
+      setTimeout(this._scrollDown.bind(this, pageY), 15);
+    }
+  }
+
+  _scrollUp (pageY) {
+    if (this.state.dragging && pageY === this._pageY) {
+      window.scrollBy(0, -5);
+      setTimeout(this._scrollUp.bind(this, pageY), 15);
+    }
+  }
+
+  componentDidMount(){
+    /*** REGISTER DRAG AND DROP EVENTS */
+    this._registerDragAndDropEvents();
+
+    /*** REGISTER AUTO SCROLL WHILE DRAGGING EVENTS */
+    this._registerAutoScrollWhenDraggingEvents();
   }
 
   setBookListRef = (bookList) => {
