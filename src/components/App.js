@@ -51,7 +51,7 @@ class BooksApp extends React.Component {
       message: BooksApp._getSendingMessage(BooksGrid.shelfNamesByType, toShelf),
       status: 'loading',
       dismissible: false,
-      dismissAfter: 0
+      dismissAfter: 0,
     });
     BooksAPI.update({ id: bookId }, toShelf)
       .then( () => {
