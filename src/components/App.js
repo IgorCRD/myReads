@@ -22,6 +22,10 @@ class BooksApp extends React.Component {
     blockResultsArea: false,
   }
 
+  getAllBooks = () => {
+    return BooksAPI.getAll();
+  }
+
   static _getSendingMessage(shelvesNames, shelfType){
     if(shelfType === 'none'){
       return 'Removing book from shelves...';
@@ -51,7 +55,7 @@ class BooksApp extends React.Component {
     });
     BooksAPI.update({ id: bookId }, toShelf)
       .then( () => {
-        return BooksAPI.getAll();
+        return this.getAllBooks();
       })
       .then( (books) => {
         notif.status = 'success';
@@ -80,7 +84,7 @@ class BooksApp extends React.Component {
   componentDidMount = () => {
     this.setBlockResultsArea(true);
 
-    BooksAPI.getAll()
+    this.getAllBooks()
       .then( (books) => {
         this.setState({ books: books })
       })
