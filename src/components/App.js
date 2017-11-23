@@ -40,7 +40,7 @@ class BooksApp extends React.Component {
       return 'Book removed.';
     }
     else {
-      return `Book saved to ${ shelvesNames[shelfType] }.`
+      return `Book saved to ${ shelvesNames[shelfType] }.`;
     }
   }
 
