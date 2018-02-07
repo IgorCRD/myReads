@@ -17,7 +17,7 @@ const store = createStoreWithMiddleware(combineReducers({
 }), {});
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Provider store={ store }>
       <div>
         <NotificationsSystem theme={ wyboTheme }/>
