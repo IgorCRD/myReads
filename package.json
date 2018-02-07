@@ -25,6 +25,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "gh-pages": "^1.1.0",
     "react-scripts": "0.9.5"
   },
   "scripts": {
