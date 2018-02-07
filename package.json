@@ -4,7 +4,7 @@
     "name": "Crispim",
     "email": "igor.crispimdiniz@gmail.com"
   },
-  "homepage": "http://IgorCRD.github.io/myReads"
+  "homepage": "https://IgorCRD.github.io/myReads/"
   "version": "1.0.0",
   "private": true,
   "dependencies": {
