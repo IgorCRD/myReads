@@ -4,6 +4,10 @@ This project is a required component for udacity react nanodegree.
 
 I started it forking from the template project available at [MyReads at udacity github repository](https://github.com/udacity/reactnd-project-myreads-starter.git)
 
+## Try it!
+
+-- https://igorcrd.github.io/myReads/
+
 ## TL;DR
 
 To put it to work right away:
